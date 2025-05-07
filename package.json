@@ -1,21 +1,39 @@
 {
-  "name": "dautroc",
-  "displayName": "flash-vscode",
+  "name": "flash-vscode",
+  "displayName": "Flash VSCode",
   "description": "Quick code navigation using search labels, inspired by flash.nvim",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.99.0"
+    "vscode": "^1.96.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dautroc/flash-vscode.git"
+  },
+  "activationEvents": [
+    "onCommand:flash-vscode.jump",
+    "onCommand:flash-vscode.cancel"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "dautroc.helloWorld",
-        "title": "Hello World"
+        "command": "flash-vscode.jump",
+        "title": "Flash: Trigger Jump"
+      },
+      {
+        "command": "flash-vscode.cancel",
+        "title": "Flash: Cancel Jump"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "escape",
+        "command": "flash-vscode.cancel",
+        "when": "flash-jump.active"
       }
     ]
   },
@@ -28,7 +46,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.99.0",
+    "@types/vscode": "^1.96.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
