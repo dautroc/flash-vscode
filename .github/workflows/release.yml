@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues/PRs
+      pull-requests: write # to be able to comment on released PRs
+      id-token: write # to enable use of OIDC for npm provenance
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # This is important to allow semantic-release to push changes back to the repo
+          persist-credentials: false 
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies
+        run: npm ci
+      
+      # Your vscode:prepublish script (npm run compile) should handle building TypeScript
+      # semantic-release will call `vsce package` via the @semantic-release/exec plugin
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # If you were publishing to npm, you'd add NPM_TOKEN here
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release 
