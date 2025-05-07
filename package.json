@@ -2,7 +2,7 @@
   "name": "flash-vscode",
   "displayName": "Flash VSCode",
   "description": "Quick code navigation using search labels, inspired by flash.nvim",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.96.0"
   },

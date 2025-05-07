@@ -1,3 +1,16 @@
+# 1.0.0 (2025-05-07)
+
+
+### Bug Fixes
+
+* make text not shifting when searching label ([1c24e28](https://github.com/dautroc/flash-vscode/commit/1c24e2836a2ebd2099397f1ceeef36f22713675a))
+* resolve mismatch in package-lock json ([011c55e](https://github.com/dautroc/flash-vscode/commit/011c55e0a85409b1b075fe651082a7b204bba219))
+
+
+### Features
+
+* label searching and background dim ([f3db586](https://github.com/dautroc/flash-vscode/commit/f3db5860561c9365af9a5bfab594445efa3ea217))
+
 # Change Log
 
 All notable changes to the "dautroc" extension will be documented in this file.
