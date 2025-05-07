@@ -2,6 +2,10 @@
 
 Flash provides quick code navigation using search labels, inspired by the popular `flash.nvim` plugin for Neovim. Quickly jump to any visible text in your editor by typing a few characters and then a corresponding label.
 
+[![VS Marketplace](https://img.shields.io/visual-studio-marketplace/v/dautroc.flash-vscode-dautroc?style=for-the-badge&label=VS%20Marketplace&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=dautroc.flash-vscode-dautroc)
+
+[Get it from the Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=dautroc.flash-vscode-dautroc)
+
 ## Features
 
 *   **Incremental Search & Labeling**:
