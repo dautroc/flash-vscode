@@ -39,7 +39,7 @@ Flash provides quick code navigation using search labels, inspired by the popula
 
 ## Roadmap (Upcoming Features)
 
-We're excited to continue improving Flash! Here are some features we're considering for future releases:
+I'm continue improving Flash! Here are some features I'm considering for future releases:
 
 *   **Multi-Character Labels**: Support for two or more character labels to handle a larger number of jump targets.
 *   **Advanced Search Modes**:
@@ -60,5 +60,3 @@ We're excited to continue improving Flash! Here are some features we're consider
 *   **Multi-Cursor Support**: Initiate Flash jumps from multiple cursor positions simultaneously.
 
 ---
-
-**I hope you enjoy using Flash!**
