@@ -1,6 +1,7 @@
 {
-  "name": "flash-vscode",
+  "name": "flash-vscode-dautroc",
   "displayName": "Flash VSCode",
+  "publisher": "dautroc",
   "description": "Quick code navigation using search labels, inspired by flash.nvim",
   "version": "1.0.0",
   "icon": "flash-logo.png",

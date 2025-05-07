@@ -18,8 +18,8 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "npm run vscode:prepublish && npx vsce package -o flash-vscode-${nextRelease.version}.vsix",
-        "successCmd": "echo 'VSIX packaged: flash-vscode-${nextRelease.version}.vsix'"
+        "prepareCmd": "npm run vscode:prepublish && npx vsce package -o flash-vscode-dautroc-${nextRelease.version}.vsix",
+        "successCmd": "echo 'VSIX packaged: flash-vscode-dautroc-${nextRelease.version}.vsix'"
       }
     ],
     [
@@ -33,7 +33,7 @@
       "@semantic-release/github",
       {
         "assets": [
-          { "path": "flash-vscode-${nextRelease.version}.vsix", "label": "Flash VSCode Extension VSIX (v${nextRelease.version})" },
+          { "path": "flash-vscode-dautroc-${nextRelease.version}.vsix", "label": "Flash VSCode Extension VSIX (v${nextRelease.version})" },
           "CHANGELOG.md"
         ]
       }
