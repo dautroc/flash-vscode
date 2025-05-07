@@ -197,7 +197,7 @@ function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position) {
     editor.selection = new vscode.Selection(position, position);
     editor.revealRange(
         new vscode.Range(position, position),
-        vscode.TextEditorRevealType.InCenter,
+        vscode.TextEditorRevealType.Default,
     );
 }
 
