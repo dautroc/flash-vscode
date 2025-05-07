@@ -27,14 +27,16 @@ function isCharEqual(a: string, b: string): boolean {
 
 function createLabelDecoration(labelChar: string): vscode.TextEditorDecorationType {
     return vscode.window.createTextEditorDecorationType({
-        before: {
+        after: {
             contentText: labelChar,
             color: new vscode.ThemeColor('badge.foreground'),
             backgroundColor: new vscode.ThemeColor('badge.background'),
             fontWeight: 'bold',
-            margin: '0', // No space around the label
-            border: `1px solid ${new vscode.ThemeColor('badge.background').id}`, // Border for distinctness
-        },
+            border: `1px solid ${new vscode.ThemeColor('badge.background').id}`,
+            margin: `0 0.2ch 0 -1.2ch`, // top, right, bottom, left (pulls left)
+            width: '1ch', // Attempt to give the label box a more consistent width
+            textDecoration: 'none; text-align: center;' // Attempt to center the character in the box
+        }
     });
 }
 
@@ -125,19 +127,18 @@ function updateDecorations(
         }
 
         const labelDecoration = createLabelDecoration(chosenLabelChar);
-        // Apply label at the start of the match
-        const labelDecorationRange = new vscode.Range(range.start, range.start);
+        // The decoration itself is applied to a zero-width range at the start of the matched range.
+        const labelAnchorRange = new vscode.Range(range.start, range.start);
 
-
-        session.editor.setDecorations(labelDecoration, [labelDecorationRange]);
+        session.editor.setDecorations(labelDecoration, [labelAnchorRange]);
         session.placeholders.push({
             label: chosenLabelChar,
-            targetPosition: range.start, // Jump to the start of the full match
+            targetPosition: range.start, // Jump still goes to the logical start of the match
             decoration: labelDecoration,
-            decorationRange: labelDecorationRange,
+            decorationRange: labelAnchorRange, // This is the range the decoration is actually on
         });
 
-        // Highlight the matched sequence (if it's more than one character, or to distinguish)
+        // Highlight the matched sequence 
         if (!range.isEmpty) {
              highlightRanges.push(range);
         }
