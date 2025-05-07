@@ -3,6 +3,7 @@
   "displayName": "Flash VSCode",
   "description": "Quick code navigation using search labels, inspired by flash.nvim",
   "version": "1.0.0",
+  "icon": "flash-logo.png",
   "engines": {
     "vscode": "^1.96.0"
   },
