@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dautroc/flash-vscode/compare/v1.0.0...v1.1.0) (2025-05-10)
+
+
+### Features
+
+* add visual mode selection when trigger jump ([9547bad](https://github.com/dautroc/flash-vscode/commit/9547bad76cc36465ecacfa60ddf95fc0968e718f))
+
 # 1.0.0 (2025-05-07)
 
 
