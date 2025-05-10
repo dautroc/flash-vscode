@@ -37,7 +37,7 @@ Flash provides quick code navigation using search labels, inspired by the popula
 
 ## Known Issues
 
-*   Label character generation is currently limited to a predefined set of single characters. If more targets are found than available unique labels, not all targets will receive a label.
+*   Label character generation is limited to a predefined set of single characters (e.g., `f`, `j`, `d`, `k`). If there are more potential jump targets visible on screen than available unique single-character labels, not all targets will receive a label. This is a deliberate design choice to keep label input quick and simple.
 
 ---
 
@@ -45,7 +45,6 @@ Flash provides quick code navigation using search labels, inspired by the popula
 
 I'm continue improving Flash! Here are some features I'm considering for future releases:
 
-*   **Multi-Character Labels**: Support for two or more character labels to handle a larger number of jump targets.
 *   **Advanced Search Modes**:
     *   **Word Mode**: Target whole words.
     *   **Line Mode**: Target the beginning of lines.
@@ -64,3 +63,7 @@ I'm continue improving Flash! Here are some features I'm considering for future 
 *   **Multi-Cursor Support**: Initiate Flash jumps from multiple cursor positions simultaneously.
 
 ---
+
+## Design Notes & Past Considerations
+
+*   **Single vs. Multi-Character Labels**: While multi-character labels (e.g., `aa`, `ab`) were considered as a way to support a virtually unlimited number of jump targets, user feedback and testing indicated that inputting two or more characters for a label often felt slower or more cumbersome than simply typing an additional character of the desired search term itself. To maintain the core philosophy of speed and minimal friction for common use cases, Flash currently focuses on efficient single-character labels.
