@@ -181,13 +181,6 @@ async function handleFlashTypeInput(session: ActiveFlashSession, typedChar: stri
         return;
     }
     
-    // Optional: If only one match remains, jump immediately (Uncomment to enable)
-    // if (newMatchedRanges.length === 1) {
-    //     jumpToPosition(session.editor, newMatchedRanges[0].start, session); // Pass session if uncommented
-    //     await clearCurrentFlashSession();
-    //     return;
-    // }
-
     session.lastMatchedRanges = newMatchedRanges;
 
     // 4. Update decorations (placeholders and highlights)
