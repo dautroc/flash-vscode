@@ -44,16 +44,6 @@ Flash provides quick code navigation using search labels, inspired by the popula
 ## Roadmap (Upcoming Features)
 
 I'm continue improving Flash! Here are some features I'm considering for future releases:
-
-*   **Advanced Search Modes**:
-    *   **Word Mode**: Target whole words.
-    *   **Line Mode**: Target the beginning of lines.
-    *   **Regex Mode**: Use regular expressions to define jump targets.
-    *   **(Experimental) Tree-sitter Mode**: For structural code jumps based on AST nodes.
-*   **Customization**:
-    *   Allow users to define their preferred set of label characters.
-    *   Allow users to customize the appearance (colors, styles) of labels, highlights, and dimmed text.
-*   **"Select To" Functionality**: Jump and simultaneously select text from the original cursor position to the new target.
 *   **Repeat Last Jump**: A command to quickly re-execute the previous Flash jump sequence.
 *   **Configuration Options**:
     *   Option to automatically jump when only one match remains (without needing Enter).
