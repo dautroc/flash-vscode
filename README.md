@@ -15,6 +15,8 @@ Flash provides quick code navigation using search labels, inspired by the popula
 *   **Direct Jump**:
     *   Type the character of the displayed label to instantly move your cursor to the beginning of that target.
     *   If only one match remains after typing search characters, pressing "Enter" will jump to that match.
+*   **Visual Mode Selection (Select To)**:
+    *   If Flash is triggered while text is selected (visual mode), jumping to a target will extend the selection from the original selection's anchor to the new target position.
 *   **Minimal Distraction**:
     *   Non-matching text is dimmed to help you focus on potential targets.
     *   When jumping, the editor scrolls minimally (`TextEditorRevealType.Default`) to keep the target in view without disorienting centering.

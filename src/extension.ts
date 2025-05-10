@@ -16,6 +16,7 @@ interface ActiveFlashSession {
     placeholders: FlashPlaceholder[];
     lastMatchedRanges: vscode.Range[] | undefined;
     typeCommandDisposable: vscode.Disposable;
+    selectionAnchor?: vscode.Position; // Added for "select to" functionality
     dispose: () => Promise<void>;
 }
 
@@ -153,14 +154,14 @@ function updateDecorations(
 async function handleFlashTypeInput(session: ActiveFlashSession, typedChar: string) {
     // 1. Handle direct jump actions (Enter or matching a label)
     if (typedChar === "\n" && session.placeholders.length === 1) {
-        jumpToPosition(session.editor, session.placeholders[0].targetPosition);
+        jumpToPosition(session.editor, session.placeholders[0].targetPosition, session);
         await clearCurrentFlashSession();
         return;
     }
 
     for (const placeholder of session.placeholders) {
         if (isCharEqual(placeholder.label, typedChar)) {
-            jumpToPosition(session.editor, placeholder.targetPosition);
+            jumpToPosition(session.editor, placeholder.targetPosition, session);
             await clearCurrentFlashSession();
             return;
         }
@@ -182,7 +183,7 @@ async function handleFlashTypeInput(session: ActiveFlashSession, typedChar: stri
     
     // Optional: If only one match remains, jump immediately (Uncomment to enable)
     // if (newMatchedRanges.length === 1) {
-    //     jumpToPosition(session.editor, newMatchedRanges[0].start); // Jump to start of the single match
+    //     jumpToPosition(session.editor, newMatchedRanges[0].start, session); // Pass session if uncommented
     //     await clearCurrentFlashSession();
     //     return;
     // }
@@ -193,8 +194,12 @@ async function handleFlashTypeInput(session: ActiveFlashSession, typedChar: stri
     updateDecorations(session, newMatchedRanges);
 }
 
-function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position) {
-    editor.selection = new vscode.Selection(position, position);
+function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position, session: ActiveFlashSession | undefined) {
+    if (session && session.selectionAnchor) {
+        editor.selection = new vscode.Selection(session.selectionAnchor, position);
+    } else {
+        editor.selection = new vscode.Selection(position, position);
+    }
     editor.revealRange(
         new vscode.Range(position, position),
         vscode.TextEditorRevealType.Default,
@@ -206,6 +211,9 @@ function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position) {
  */
 async function startFlashJumpSession(editor: vscode.TextEditor) {
     await clearCurrentFlashSession(); // Clear any previous session
+
+    const initialSelection = editor.selection;
+    const selectionAnchor = !initialSelection.isEmpty ? initialSelection.anchor : undefined;
 
     const dimDecoration = vscode.window.createTextEditorDecorationType({
         // Dim unfocused text using a theme color for ghost text
@@ -234,6 +242,7 @@ async function startFlashJumpSession(editor: vscode.TextEditor) {
         placeholders: [],
         lastMatchedRanges: undefined,
         typeCommandDisposable,
+        selectionAnchor, // Store the selection anchor
         dispose: async () => {
             dimDecoration.dispose();
             highlightDecoration.dispose();
