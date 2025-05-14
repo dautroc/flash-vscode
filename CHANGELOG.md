@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/dautroc/flash-vscode/compare/v1.1.0...v1.2.0) (2025-05-14)
+
+
+### Features
+
+* support case-insensitive query ([17be99c](https://github.com/dautroc/flash-vscode/commit/17be99c181bd197a3b2f272a5a87cf039a3f92a9))
+
 # [1.1.0](https://github.com/dautroc/flash-vscode/compare/v1.0.0...v1.1.0) (2025-05-10)
 
 
