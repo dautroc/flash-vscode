@@ -1,12 +1,12 @@
 import * as vscode from "vscode";
 
-const PLACEHOLDER_LABEL_CHARS = "fjdksla;ghrueiwoqptyvncmx,z.b"; // Characters for labels
+const PLACEHOLDER_LABEL_CHARS = "fjdksla;ghrueiwoqptyvncmx,z.b";
 
 interface FlashPlaceholder {
     label: string;
-    targetPosition: vscode.Position; // The start of the matched sequence
+    targetPosition: vscode.Position;
     decoration: vscode.TextEditorDecorationType;
-    decorationRange: vscode.Range; // The range where the label decoration is applied
+    decorationRange: vscode.Range;
 }
 
 interface ActiveFlashSession {
@@ -16,7 +16,7 @@ interface ActiveFlashSession {
     placeholders: FlashPlaceholder[];
     lastMatchedRanges: vscode.Range[] | undefined;
     typeCommandDisposable: vscode.Disposable;
-    selectionAnchor?: vscode.Position; // Added for "select to" functionality
+    selectionAnchor?: vscode.Position;
     dispose: () => Promise<void>;
 }
 
@@ -53,11 +53,13 @@ async function clearCurrentFlashSession() {
  */
 function findInitialMatchingRanges(editor: vscode.TextEditor, searchChar: string): vscode.Range[] {
     const ranges: vscode.Range[] = [];
+    const lowerSearchChar = searchChar.toLowerCase();
     for (const visibleRange of editor.visibleRanges) {
         const text = editor.document.getText(visibleRange);
+        const lowerText = text.toLowerCase();
         let currentOffset = 0;
         while (true) {
-            const matchIndex = text.indexOf(searchChar, currentOffset);
+            const matchIndex = lowerText.indexOf(lowerSearchChar, currentOffset);
             if (matchIndex === -1) {
                 break;
             }
@@ -117,7 +119,8 @@ function updateDecorations(
         let chosenLabelChar: string | undefined = undefined;
         while(labelIndex < PLACEHOLDER_LABEL_CHARS.length) {
             const potentialLabel = PLACEHOLDER_LABEL_CHARS[labelIndex++];
-            if (!charactersFollowingRanges.has(potentialLabel)) {
+            // Ensure potentialLabel is treated as lowercase for comparison, though PLACEHOLDER_LABEL_CHARS is already lowercase
+            if (!charactersFollowingRanges.has(potentialLabel.toLowerCase())) { 
                 chosenLabelChar = potentialLabel;
                 break;
             }
