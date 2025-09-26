@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/dautroc/flash-vscode/compare/v1.2.0...v1.2.1) (2025-09-26)
+
+
+### Bug Fixes
+
+* resolve label display issue at line beginning ([954b1b5](https://github.com/dautroc/flash-vscode/commit/954b1b57d46b2bafd2f6b68a8a285ba6ddb2acf7))
+
 # [1.2.0](https://github.com/dautroc/flash-vscode/compare/v1.1.0...v1.2.0) (2025-05-14)
 
 
