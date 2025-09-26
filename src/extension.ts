@@ -28,15 +28,15 @@ function isCharEqual(a: string, b: string): boolean {
 
 function createLabelDecoration(labelChar: string): vscode.TextEditorDecorationType {
     return vscode.window.createTextEditorDecorationType({
-        after: {
+        before: {
             contentText: labelChar,
             color: new vscode.ThemeColor('badge.foreground'),
             backgroundColor: new vscode.ThemeColor('badge.background'),
             fontWeight: 'bold',
             border: `1px solid ${new vscode.ThemeColor('badge.background').id}`,
-            margin: `0 0.2ch 0 -1.2ch`, // top, right, bottom, left (pulls left)
+            margin: `0 0.2ch 0 0`, // top, right, bottom, left
             width: '1ch', // Attempt to give the label box a more consistent width
-            textDecoration: 'none; text-align: center;' // Attempt to center the character in the box
+            textDecoration: 'none; text-align: center;' // Clean up - remove position relative
         }
     });
 }
