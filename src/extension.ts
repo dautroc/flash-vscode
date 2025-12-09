@@ -205,11 +205,16 @@ function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position, se
 /**
  * Main command handler to initiate a flash jump session.
  */
-async function startFlashJumpSession(editor: vscode.TextEditor) {
+async function startFlashJumpSession(editor: vscode.TextEditor, args?: Record<PropertyKey, any>) {
     await clearCurrentFlashSession(); // Clear any previous session
 
     const initialSelection = editor.selection;
-    const selectionAnchor = !initialSelection.isEmpty ? initialSelection.anchor : undefined;
+    let selectionAnchor = !initialSelection.isEmpty ? initialSelection.anchor : undefined;
+    if (args?.select === true) {
+        selectionAnchor = initialSelection.anchor;
+    } else if (args?.select === false) {
+        selectionAnchor = undefined;
+    }
 
     const dimDecoration = vscode.window.createTextEditorDecorationType({
         // Dim unfocused text using a theme color for ghost text
@@ -260,8 +265,8 @@ async function startFlashJumpSession(editor: vscode.TextEditor) {
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand("flash-vscode.cancel", clearCurrentFlashSession),
-        vscode.commands.registerTextEditorCommand("flash-vscode.jump", (editor) => {
-            startFlashJumpSession(editor);
+        vscode.commands.registerTextEditorCommand("flash-vscode.jump", (editor, _, args) => {
+            startFlashJumpSession(editor, args);
         })
     );
 }
