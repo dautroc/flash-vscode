@@ -2,6 +2,10 @@ import * as vscode from "vscode";
 
 const PLACEHOLDER_LABEL_CHARS = "fjdksla;ghrueiwoqptyvncmx,z.b";
 
+interface FlashJumpArgs {
+    select: boolean | undefined;
+}
+
 interface FlashPlaceholder {
     label: string;
     targetPosition: vscode.Position;
@@ -205,7 +209,7 @@ function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position, se
 /**
  * Main command handler to initiate a flash jump session.
  */
-async function startFlashJumpSession(editor: vscode.TextEditor, args?: Record<PropertyKey, any>) {
+async function startFlashJumpSession(editor: vscode.TextEditor, args: FlashJumpArgs) {
     await clearCurrentFlashSession(); // Clear any previous session
 
     const initialSelection = editor.selection;
@@ -261,12 +265,27 @@ async function startFlashJumpSession(editor: vscode.TextEditor, args?: Record<Pr
     await vscode.commands.executeCommand("setContext", "flash-jump.active", true);
 }
 
+function normalizeFlashJumpArgs(unknownArgs: unknown) {
+    const defaultArgs: FlashJumpArgs = {
+        select: undefined,
+    };
+
+    if (!unknownArgs || typeof unknownArgs !== 'object' || Array.isArray(unknownArgs)) {
+        return defaultArgs;
+    }
+
+    if ('select' in unknownArgs && typeof unknownArgs.select === 'boolean') {
+        defaultArgs.select = unknownArgs.select;
+    }
+
+    return defaultArgs;
+}
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand("flash-vscode.cancel", clearCurrentFlashSession),
         vscode.commands.registerTextEditorCommand("flash-vscode.jump", (editor, _, args) => {
-            startFlashJumpSession(editor, args);
+            startFlashJumpSession(editor, normalizeFlashJumpArgs(args));
         })
     );
 }
