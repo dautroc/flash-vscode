@@ -2,6 +2,10 @@ import * as vscode from "vscode";
 
 const PLACEHOLDER_LABEL_CHARS = "fjdksla;ghrueiwoqptyvncmx,z.b";
 
+interface FlashJumpArgs {
+    select: boolean | undefined;
+}
+
 interface FlashPlaceholder {
     label: string;
     targetPosition: vscode.Position;
@@ -205,11 +209,16 @@ function jumpToPosition(editor: vscode.TextEditor, position: vscode.Position, se
 /**
  * Main command handler to initiate a flash jump session.
  */
-async function startFlashJumpSession(editor: vscode.TextEditor) {
+async function startFlashJumpSession(editor: vscode.TextEditor, args: FlashJumpArgs) {
     await clearCurrentFlashSession(); // Clear any previous session
 
     const initialSelection = editor.selection;
-    const selectionAnchor = !initialSelection.isEmpty ? initialSelection.anchor : undefined;
+    let selectionAnchor = !initialSelection.isEmpty ? initialSelection.anchor : undefined;
+    if (args?.select === true) {
+        selectionAnchor = initialSelection.anchor;
+    } else if (args?.select === false) {
+        selectionAnchor = undefined;
+    }
 
     const dimDecoration = vscode.window.createTextEditorDecorationType({
         // Dim unfocused text using a theme color for ghost text
@@ -256,12 +265,27 @@ async function startFlashJumpSession(editor: vscode.TextEditor) {
     await vscode.commands.executeCommand("setContext", "flash-jump.active", true);
 }
 
+function normalizeFlashJumpArgs(unknownArgs: unknown) {
+    const defaultArgs: FlashJumpArgs = {
+        select: undefined,
+    };
+
+    if (!unknownArgs || typeof unknownArgs !== 'object' || Array.isArray(unknownArgs)) {
+        return defaultArgs;
+    }
+
+    if ('select' in unknownArgs && typeof unknownArgs.select === 'boolean') {
+        defaultArgs.select = unknownArgs.select;
+    }
+
+    return defaultArgs;
+}
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand("flash-vscode.cancel", clearCurrentFlashSession),
-        vscode.commands.registerTextEditorCommand("flash-vscode.jump", (editor) => {
-            startFlashJumpSession(editor);
+        vscode.commands.registerTextEditorCommand("flash-vscode.jump", (editor, _, args) => {
+            startFlashJumpSession(editor, normalizeFlashJumpArgs(args));
         })
     );
 }
