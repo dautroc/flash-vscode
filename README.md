@@ -16,7 +16,8 @@ Flash provides quick code navigation using search labels, inspired by the popula
     *   Type the character of the displayed label to instantly move your cursor to the beginning of that target.
     *   If only one match remains after typing search characters, pressing "Enter" will jump to that match.
 *   **Visual Mode Selection (Select To)**:
-    *   If Flash is triggered while text is selected (visual mode), jumping to a target will extend the selection from the original selection's anchor to the new target position.
+    *   By default, if Flash is triggered while text is selected (visual mode), jumping to a target will extend the selection from the original selection's anchor to the new target position.
+    *   This behavior could be overridden by using the `select` argument: pass `{ "select": true }` to force selection mode even without existing selection, or `{ "select": false }` to force jump-only mode and discard any existing selection.
 *   **Minimal Distraction**:
     *   Non-matching text is dimmed to help you focus on potential targets.
     *   When jumping, the editor scrolls minimally (`TextEditorRevealType.Default`) to keep the target in view without disorienting centering.
@@ -31,11 +32,43 @@ Flash provides quick code navigation using search labels, inspired by the popula
 ## Commands
 
 *   `Flash: Trigger Jump` (ID: `flash-vscode.jump`): Activates the flash jump mode.
+    
+    Accepts an optional `args` object with a `select` property (boolean) to control selection behavior:
+    - `true` — Forces selection mode: extends selection from current cursor to jump target
+    - `false` — Forces jump mode: moves cursor without selecting, even if text is currently selected
+    - `undefined` (default) — Auto mode: maintains selection if text is already selected, otherwise just moves cursor
+
 *   `Flash: Cancel Jump` (ID: `flash-vscode.cancel`): Deactivates flash jump mode (also triggered by `Escape` key during an active session).
 
 ## Extension Settings
 
 *Currently, there are no specific settings for this extension. Future versions may include customization options.*
+
+## Keybinding Examples
+
+You can customize how Flash behaves by passing arguments in your `keybindings.json`:
+
+```json
+// Default Flash jump (auto-detects selection mode)
+{
+  "key": "ctrl+;",
+  "command": "flash-vscode.jump"
+}
+
+// Always select when jumping
+{
+  "key": "ctrl+shift+;",
+  "command": "flash-vscode.jump",
+  "args": { "select": true }
+}
+
+// Always jump without selecting
+{
+  "key": "ctrl+alt+;",
+  "command": "flash-vscode.jump",
+  "args": { "select": false }
+}
+```
 
 ## Known Issues
 
