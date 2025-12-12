@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/dautroc/flash-vscode/compare/v1.2.1...v1.3.0) (2025-12-12)
+
+
+### Features
+
+* accept optional arguments for selection behavior ([90effdb](https://github.com/dautroc/flash-vscode/commit/90effdb96c0698e48a27e22b48e4f44f87dbf8bb))
+* update flash jump session to accept structured arguments ([87b4aca](https://github.com/dautroc/flash-vscode/commit/87b4acabf4b6a5a670bf292dc1d4069697f16360))
+
 ## [1.2.1](https://github.com/dautroc/flash-vscode/compare/v1.2.0...v1.2.1) (2025-09-26)
 
 
