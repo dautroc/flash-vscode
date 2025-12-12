@@ -40,7 +40,7 @@ function createLabelDecoration(labelChar: string): vscode.TextEditorDecorationTy
             border: `1px solid ${new vscode.ThemeColor('badge.background').id}`,
             margin: `0 0.2ch 0 0`, // top, right, bottom, left
             width: '1ch', // Attempt to give the label box a more consistent width
-            textDecoration: 'none; text-align: center;' // Clean up - remove position relative
+            textDecoration: 'none; position: absolute; text-align: center;' // Use absolute positioning to prevent text shift
         }
     });
 }
