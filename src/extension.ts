@@ -30,7 +30,7 @@ function isCharEqual(a: string, b: string): boolean {
     return a.toLowerCase() === b.toLowerCase();
 }
 
-function createLabelDecoration(labelChar: string): vscode.TextEditorDecorationType {
+function createLabelDecoration(labelChar: string, isLineStart: boolean): vscode.TextEditorDecorationType {
     return vscode.window.createTextEditorDecorationType({
         before: {
             contentText: labelChar,
@@ -38,7 +38,7 @@ function createLabelDecoration(labelChar: string): vscode.TextEditorDecorationTy
             backgroundColor: new vscode.ThemeColor('badge.background'),
             fontWeight: 'bold',
             border: `1px solid ${new vscode.ThemeColor('badge.background').id}`,
-            margin: `0 0.2ch 0 0`, // top, right, bottom, left
+            margin: `0 0.2ch 0 ${isLineStart ? '0' : '-1.2ch'}`, // top, right, bottom, left
             width: '1ch', // Attempt to give the label box a more consistent width
             textDecoration: 'none; position: absolute; text-align: center;' // Use absolute positioning to prevent text shift
         }
@@ -134,7 +134,8 @@ function updateDecorations(
             break; // Not enough unique labels
         }
 
-        const labelDecoration = createLabelDecoration(chosenLabelChar);
+        const isLineStart = range.start.character === 0;
+        const labelDecoration = createLabelDecoration(chosenLabelChar, isLineStart);
         // The decoration itself is applied to a zero-width range at the start of the matched range.
         const labelAnchorRange = new vscode.Range(range.start, range.start);
 
